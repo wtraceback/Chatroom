@@ -1,11 +1,14 @@
+import os
 from flask import Flask
-from config import Config
+from config import config
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 
 
 app = Flask(__name__)
-app.config.from_object(Config)
+config_name = os.getenv('FLASK_CONFIG', 'default')
+app.config.from_object(config[config_name])
+config[config_name].init_app(app)
 db = SQLAlchemy(app)
 login = LoginManager(app)
 
