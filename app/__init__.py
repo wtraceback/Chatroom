@@ -17,6 +17,8 @@ from app.auth import auth_bp
 app.register_blueprint(auth_bp)
 from app.chat import chat_bp
 app.register_blueprint(chat_bp)
+from app.errors import errors_bp
+app.register_blueprint(errors_bp)
 
 
 login.login_view = 'auth.login'

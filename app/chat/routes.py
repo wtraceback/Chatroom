@@ -6,6 +6,4 @@ from app.chat import chat_bp
 @chat_bp.route('/')
 @login_required
 def index():
-    title = 'Chatroom'
-
-    return render_template('chat/index.html', title=title)
+    return render_template('chat/index.html')

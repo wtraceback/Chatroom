@@ -29,7 +29,7 @@ def login():
             next_page = url_for('chat.index')
         return redirect(next_page)
 
-    return render_template('auth/login.html', title='Sign In', form=form)
+    return render_template('auth/login.html', form=form)
 
 
 @auth_bp.route('/logout')
@@ -56,4 +56,4 @@ def register():
         flash('Congratulations, you are now a registered user!')
         return redirect(url_for('auth.login'))
 
-    return render_template('auth/register.html', title='Register', form=form)
+    return render_template('auth/register.html', form=form)
