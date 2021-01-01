@@ -13,7 +13,13 @@ db = SQLAlchemy(app)
 login = LoginManager(app)
 
 
-login.login_view = 'login'
+from app.auth import auth_bp
+app.register_blueprint(auth_bp)
+from app.chat import chat_bp
+app.register_blueprint(chat_bp)
+
+
+login.login_view = 'auth.login'
 login.login_message = 'Please log in'
 
 @login.user_loader
@@ -22,4 +28,4 @@ def load_user(id):
     return User.query.get(int(id))
 
 
-from app import routes, models
+from app import models

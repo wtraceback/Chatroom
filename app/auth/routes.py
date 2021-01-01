@@ -1,23 +1,16 @@
 from flask import render_template, redirect, flash, url_for, request
-from flask_login import current_user, login_user, logout_user, login_required
+from flask_login import current_user, login_user, logout_user
 from werkzeug.urls import url_parse
-from app import app, db
+from app import db
 from app.forms import LoginForm, RegistrationForm
 from app.models import User
+from app.auth import auth_bp
 
 
-@app.route('/')
-@login_required
-def index():
-    title = 'Chatroom'
-
-    return render_template('index.html', title=title)
-
-
-@app.route('/login', methods=['GET', 'POST'])
+@auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('index'))
+        return redirect(url_for('chat.index'))
 
     form = LoginForm()
     if form.validate_on_submit():
@@ -28,27 +21,27 @@ def login():
         user = User.query.filter_by(username=username).first()
         if user is None or not user.check_password(password):
             flash('Invalid username or password')
-            return redirect(url_for('login'))
+            return redirect(url_for('auth.login'))
 
         login_user(user, remember=remember)
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
-            next_page = url_for('index')
+            next_page = url_for('chat.index')
         return redirect(next_page)
 
-    return render_template('login.html', title='Sign In', form=form)
+    return render_template('auth/login.html', title='Sign In', form=form)
 
 
-@app.route('/logout')
+@auth_bp.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for('chat.index'))
 
 
-@app.route('/register', methods=['GET', 'POST'])
+@auth_bp.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
-        return redirect(url_for('index'))
+        return redirect(url_for('chat.index'))
 
     form = RegistrationForm()
     if form.validate_on_submit():
@@ -61,6 +54,6 @@ def register():
         db.session.add(user)
         db.session.commit()
         flash('Congratulations, you are now a registered user!')
-        return redirect(url_for('login'))
+        return redirect(url_for('auth.login'))
 
-    return render_template('register.html', title='Register', form=form)
+    return render_template('auth/register.html', title='Register', form=form)
