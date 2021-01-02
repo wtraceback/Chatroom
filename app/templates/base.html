@@ -1,37 +1,59 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-    <head>
-        <meta charset="utf-8">
-        <title>
-            {% block title %}
-            {% endblock %}
-        </title>
-    </head>
-    <body>
-        <div>
-            Chatroom:
-            <a href="{{ url_for('chat.index') }}">Home</a>
-            {% if current_user.is_anonymous %}
-                <a href="{{ url_for('auth.login') }}">Login</a>
-            {% else %}
-                <a href="{{ url_for('auth.logout') }}">Logout</a>
-            {% endif %}
-        </div>
+{% block doc %}
+    <!DOCTYPE html>
+    <html {% block html_attribs %}{% endblock html_attribs %}>
+        {% block html %}
+            <head>
+                {% block head %}
+                    <meta charset="utf-8">
+                    <title>
+                        {% block title %}
+                        {% endblock %}
+                    </title>
 
-        <hr>
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                <ul>
-                    {% for message in messages %}
-                        <li>
-                            {{ message }}
-                        </li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-        {% endwith %}
+                    {%- block metas %}
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    {%- endblock metas %}
 
-        {% block content %}
-        {% endblock %}
-    </body>
-</html>
+                    {% block styles %}
+                        <link rel="stylesheet" href="{{ url_for('static', filename='semantic-ui/semantic.min.css') }}">
+                    {% endblock styles %}
+                {% endblock head %}
+            </head>
+            <body {% block body_attribs %}{% endblock body_attribs %}>
+                {% block body %}
+                    {% block navbar %}
+                        <div>
+                            Chatroom:
+                            <a href="{{ url_for('chat.index') }}">Home</a>
+                            {% if current_user.is_anonymous %}
+                                <a href="{{ url_for('auth.login') }}">Login</a>
+                            {% else %}
+                                <a href="{{ url_for('auth.logout') }}">Logout</a>
+                            {% endif %}
+                        </div>
+                    {% endblock navbar %}
+
+                    {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            <ul>
+                                {% for message in messages %}
+                                    <li>
+                                        {{ message }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    {% endwith %}
+
+                    {% block content %}
+                    {% endblock content %}
+
+                    {% block scripts %}
+                        <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+                        <script src="{{ url_for('static', filename='semantic-ui/semantic.min.js') }}"></script>
+                    {% endblock scripts %}
+                {% endblock body %}
+            </body>
+        {% endblock html %}
+    </html>
+{% endblock doc %}
