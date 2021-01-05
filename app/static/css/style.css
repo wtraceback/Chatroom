@@ -1,0 +1,11 @@
+body > .grid {
+    height: 100%;
+}
+
+.column {
+    max-width: 450px;
+}
+
+.pull-left {
+    text-align: left;
+}

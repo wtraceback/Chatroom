@@ -15,6 +15,8 @@
                     {%- endblock metas %}
 
                     {% block styles %}
+                        <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+                        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
                         <link rel="stylesheet" href="{{ url_for('static', filename='semantic-ui/semantic.min.css') }}">
                     {% endblock styles %}
                 {% endblock head %}
@@ -33,24 +35,14 @@
                         </div>
                     {% endblock navbar %}
 
-                    {% with messages = get_flashed_messages() %}
-                        {% if messages %}
-                            <ul>
-                                {% for message in messages %}
-                                    <li>
-                                        {{ message }}
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        {% endif %}
-                    {% endwith %}
-
                     {% block content %}
                     {% endblock content %}
 
                     {% block scripts %}
                         <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
                         <script src="{{ url_for('static', filename='semantic-ui/semantic.min.js') }}"></script>
+                        <script src="{{ url_for('static', filename='js/form.js') }}"></script>
+                        <script src="{{ url_for('static', filename='js/script.js') }}"></script>
                     {% endblock scripts %}
                 {% endblock body %}
             </body>

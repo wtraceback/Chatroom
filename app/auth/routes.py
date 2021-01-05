@@ -12,24 +12,26 @@ def login():
     if current_user.is_authenticated:
         return redirect(url_for('chat.index'))
 
-    form = LoginForm()
-    if form.validate_on_submit():
-        username = form.username.data
-        password = form.password.data
-        remember = form.remember_me.data
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        remember_me = request.form.get('remember_me', False)
+
+        if remember_me:
+            remember_me = True
 
         user = User.query.filter_by(username=username).first()
-        if user is None or not user.check_password(password):
-            flash('Invalid username or password')
-            return redirect(url_for('auth.login'))
+        if user is not None and user.check_password(password):
+            login_user(user, remember_me)
+            next_page = request.args.get('next')
+            if not next_page or url_parse(next_page).netloc != '':
+                next_page = url_for('chat.index')
+            return redirect(next_page)
 
-        login_user(user, remember=remember)
-        next_page = request.args.get('next')
-        if not next_page or url_parse(next_page).netloc != '':
-            next_page = url_for('chat.index')
-        return redirect(next_page)
+        flash('Invalid username or password')
+        return redirect(url_for('auth.login'))
 
-    return render_template('auth/login.html', form=form)
+    return render_template('auth/login.html')
 
 
 @auth_bp.route('/logout')
