@@ -1,4 +1,5 @@
 from flask import render_template
+from flask_wtf.csrf import CSRFError
 from app import db
 from app.errors import errors_bp
 
@@ -17,3 +18,8 @@ def page_not_found(error):
 def internal_server_error(error):
     db.session.rollback()
     return render_template('errors/500.html'), 500
+
+
+@errors_bp.app_errorhandler(CSRFError)
+def handle_csrf_error(error):
+    return render_template('errors/400.html', description=error.description), 400

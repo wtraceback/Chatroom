@@ -3,10 +3,12 @@ from flask import Flask
 from config import config
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from flask_wtf import CSRFProtect
 
 
 db = SQLAlchemy()
 login = LoginManager()
+csrf = CSRFProtect()
 
 
 def create_app(config_name=None):
@@ -35,6 +37,7 @@ def load_user(id):
 def register_extensions(app):
     db.init_app(app)
     login.init_app(app)
+    csrf.init_app(app)
 
 
 def register_blueprints(app):
