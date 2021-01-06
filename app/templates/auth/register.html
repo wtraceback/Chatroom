@@ -4,53 +4,66 @@
     Register
 {% endblock %}
 
+{% block navbar %}
+{% endblock %}
+
 {% block content %}
-    <h1>Register</h1>
-    <form action="" method="post">
-        {{ form.hidden_tag() }}
+    <div class="ui middle aligned center aligned grid">
+        <div class="column">
+            <div class="ui top attached message">
+                <h3 class="ui teal image header">
+                    <img src="{{ url_for('static', filename='logo.png') }}" class="image">
+                    <div class="content">
+                        Join Chatroom
+                    </div>
+                </h3>
+            </div>
 
-        <p>
-            {{ form.username.label }}<br>
-            {{ form.username(size=32) }}<br>
-            {% for error in form.username.errors %}
-                <span style="color: red;">
-                    [{{ error }}]
-                </span>
-            {% endfor %}
-        </p>
+            <form class="register ui form attached left aligned fluid segment" action="{{ url_for('auth.register') }}" method="post">
+                <input id="csrf_token" name="csrf_token" type="hidden" value="{{ csrf_token() }}">
 
-        <p>
-            {{ form.email.label }}<br>
-            {{ form.email(size=64) }}<br>
-            {% for error in form.email.errors %}
-                <span style="color: red;">
-                    [{{ error }}]
-                </span>
-            {% endfor %}
-        </p>
+                <div class="field">
+                    <label for="username">Username</label>
+                    <input id="username" name="username" type="text">
+                </div>
 
-        <p>
-            {{ form.password.label }}<br>
-            {{ form.password(size=32) }}<br>
-            {% for error in form.password.errors %}
-                <span style="color: red;">
-                    [{{ error }}]
-                </span>
-            {% endfor %}
-        </p>
+                <div class="field">
+                    <label for="email">Email</label>
+                    <input id="email" name="email" type="text">
+                </div>
 
-        <p>
-            {{ form.password2.label }}<br>
-            {{ form.password2(size=32) }}<br>
-            {% for error in form.password2.errors %}
-                <span style="color: red;">
-                    [{{ error }}]
-                </span>
-            {% endfor %}
-        </p>
+                <div class="field">
+                    <label for="password">Password</label>
+                    <input id="password" name="password" type="password">
+                </div>
 
-        <p>
-            {{ form.submit() }}
-        </p>
-    </form>
+                <div class="field">
+                    <label for="password2">Repeat Password</label>
+                    <input id="password2" name="password2" type="password">
+                </div>
+
+                <div class="ui fluid large teal submit button">Create account</div>
+            </form>
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="ui warning message">
+                            <i class="close icon"></i>
+                            <div>
+                                {{ message }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <div class="ui message">
+                Already signed up?
+                <a href="{{ url_for('auth.login') }}">
+                    Sign In
+                </a>
+            </div>
+        </div>
+    </div>
 {% endblock %}
