@@ -1,4 +1,5 @@
 import os
+import click
 from flask import Flask
 from config import config
 from flask_sqlalchemy import SQLAlchemy
@@ -21,6 +22,7 @@ def create_app(config_name=None):
 
     register_extensions(app)
     register_blueprints(app)
+    register_commands(app)
 
     return app
 
@@ -47,3 +49,61 @@ def register_blueprints(app):
     app.register_blueprint(chat_bp)
     from app.errors import errors_bp
     app.register_blueprint(errors_bp)
+
+
+def register_commands(app):
+    @app.cli.command()
+    @click.option('--drop', is_flag=True, help='Create after drop.')
+    def initdb(drop):
+        """Initialize the database."""
+
+        if drop:
+            click.confirm('This operation will delete the database, do you want to continue?', abort=True)
+            db.drop_all()
+            click.echo('Drop tables.')
+
+        db.create_all()
+        click.echo('Initialized database.')
+
+    @app.cli.command()
+    @click.option('--message', default=100, help='Quantity of messages, default is 100.')
+    def forge(message):
+        """Generate fake data."""
+        from app.models import User, Message
+        from faker import Faker
+        import random
+        from sqlalchemy.exc import IntegrityError
+
+        fake = Faker()
+
+        click.echo('Initializing the database...')
+        db.drop_all()
+        db.create_all()
+
+        click.echo('Forging the data...')
+        admin = User(username='admin', email='admin@example.com')
+        admin.set_password('123456')
+        db.session.add(admin)
+        db.session.commit()
+
+        click.echo('Generating users...')
+        for i in range(50):
+            user = User(username=fake.name(), email=fake.email())
+            db.session.add(user)
+
+            try:
+                db.session.commit()
+            except IntegrityError:
+                db.session.rollback()
+
+        click.echo('Generating messages...')
+        for i in range(message):
+            msg = Message(
+                body=fake.sentence(),
+                author=User.query.get(random.randint(1, User.query.count())),
+                timestamp=fake.date_time_this_year()
+            )
+            db.session.add(msg)
+
+        db.session.commit()
+        click.echo('Done.')
