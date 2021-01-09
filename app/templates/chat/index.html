@@ -5,7 +5,31 @@
 {% endblock %}
 
 {% block content %}
-    <h1>
-        Hello World!
-    </h1>
+    <div class="pusher">
+        <div class="chat-box">
+            <div class="ui feed messages">
+                {% for message in messages %}
+                    {% include 'chat/_message.html' %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="input-area">
+            <div class="ui form">
+                <div class="field ten wide">
+                    {% if current_user.is_authenticated %}
+                        <img src="{{ active_user.avatar(64) }}">
+                        <textarea name="body" rows="2" placeholder="Write your message here..."></textarea>
+                    {% else %}
+                        <div class="ui floating message">
+                            <p>
+                                Please <a href="{{ url_for('auth.login') }}">Sign In</a> or
+                                <a href="{{ url_for('auth.register') }}">Sign Up</a> to send message.
+                            </p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

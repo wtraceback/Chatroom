@@ -19,7 +19,7 @@
                 </h3>
             </div>
 
-            <form class="register ui form attached left aligned fluid segment" action="{{ url_for('auth.register') }}" method="post">
+            <form class="register ui form attached stacked left aligned fluid segment" action="{{ url_for('auth.register') }}" method="post">
                 <input id="csrf_token" name="csrf_token" type="hidden" value="{{ csrf_token() }}">
 
                 <div class="field">

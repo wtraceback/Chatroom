@@ -9,3 +9,76 @@ body > .grid {
 .pull-left {
     text-align: left;
 }
+
+.pusher {
+    height: 100%;
+}
+
+/* chat-box */
+.chat-box {
+    height: 100%;
+    padding: 55px 0 90px;
+    margin: 0;
+}
+
+.messages {
+    height: 100%;
+    padding: 10px 20px;
+    margin: 0;
+    overflow-y: scroll;
+}
+
+.messages .event {
+    padding: 10px 0 !important;
+}
+
+.messages>.event>.label>img {
+    border-radius: unset !important;
+}
+
+.messages .content {
+    position: relative;
+    flex-grow: 0 !important;
+    padding: 12px !important;
+    margin: 0 0 0 1.5em !important;
+    border-radius: 5px;
+    background-color: #ECECEC;
+}
+
+.messages .content:before {
+    content: '';
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-right-color: #ECECEC;
+    position: absolute;
+    right: 100%;
+    top: 30%;
+    margin-top: -10px;
+}
+
+/* input-area */
+.input-area {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 90px;
+    padding: 10px 20px 20px;
+    background-color: #F6F6F6
+}
+
+.ui.form .field {
+    max-width: 768px;
+}
+
+.ui.form .field img {
+    position: absolute;
+    max-width: 60px;
+    max-height: 60px;
+}
+
+.ui.form .field textarea {
+    margin-left: 70px;
+    resize: none !important;
+}

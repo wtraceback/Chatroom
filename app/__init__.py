@@ -3,7 +3,7 @@ import click
 from flask import Flask
 from config import config
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager
+from flask_login import LoginManager, current_user
 from flask_wtf import CSRFProtect
 
 
@@ -22,6 +22,7 @@ def create_app(config_name=None):
 
     register_extensions(app)
     register_blueprints(app)
+    register_template_context(app)
     register_commands(app)
 
     return app
@@ -49,6 +50,20 @@ def register_blueprints(app):
     app.register_blueprint(chat_bp)
     from app.errors import errors_bp
     app.register_blueprint(errors_bp)
+
+
+def register_template_context(app):
+    from app.models import User
+
+    @app.context_processor
+    def make_template_context():
+        if current_user.is_authenticated:
+            user_id = current_user.get_id()
+            active_user = User.query.get(user_id)
+        else:
+            active_user = None
+
+        return dict(active_user=active_user)
 
 
 def register_commands(app):

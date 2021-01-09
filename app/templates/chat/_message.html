@@ -1,0 +1,18 @@
+<div class="event">
+    <div class="label">
+      <img src="{{ message.author.avatar(36) }}">
+    </div>
+
+    <div class="content">
+        <div class="summary">
+            <span>{{ message.author.username }}</span>
+            <div class="date">
+                {{ message.timestamp }}
+            </div>
+        </div>
+
+        <div class="extra text">
+            {{ message.body }}
+        </div>
+    </div>
+</div>
