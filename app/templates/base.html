@@ -24,11 +24,12 @@
             <body {% block body_attribs %}{% endblock body_attribs %}>
                 {% block body %}
                     {% block navbar %}
-                        <div class="ui fixed menu">
+                        <div class="ui top borderless fixed menu">
                             <a href="{{ url_for('chat.index') }}" class="header item">
                                 <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo image">
                                 <span>Chatroom</span>
                             </a>
+
                             <div class="item">
                                 <div class="ui basic black label" title="Online users">
                                     <i class="user icon"></i>
@@ -42,6 +43,7 @@
                                             <a class="ui primary button" href="{{ url_for('auth.login') }}">Sign In</a>
                                     </div>
                                 {% endif %}
+
                                 <div id="toggle-sidebar" class="item">
                                     <i class="sidebar icon"></i>
                                 </div>
@@ -52,18 +54,24 @@
                     <div class="ui inverted labeled icon right inline vertical sidebar menu">
                         <a class="item" href="{{ url_for('chat.index') }}">
                             <i class="home icon"></i>
-                                Index
+                            Index
                         </a>
+
                         <a class="item" target="_blank" href="https://github.com/wtraceback/Chatroom.git">
                             <i class="github icon"></i>
                             GitHub
                         </a>
+
                         {% if current_user.is_authenticated %}
                             <a class="item" href="{{ url_for('auth.logout') }}">
                                 <i class="sign-out icon"></i>
                                 Sign Out
                             </a>
                         {% endif %}
+
+                        <div class="item">
+                            © 2021 <a target="_blank" href="https://github.com/wtraceback/Chatroom.git">whxcer</a>
+                        </div>
                     </div>
 
                     {% block content %}
