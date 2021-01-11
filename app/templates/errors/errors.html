@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ code }} Error
+{% endblock %}
+
+{% block navbar %}
+{% endblock%}
+
+{% block content %}
+    <div class="ui middle aligned center aligned grid">
+        <div class="column">
+            <div class="ui top attached message">
+                <h3 class="ui teal image header">
+                    <img src="{{ url_for('static', filename='logo.png') }}" class="image">
+                    <div class="content">
+                        Chatroom - {{ code }}
+                    </div>
+                </h3>
+
+                <p>{{ description }}</p>
+
+                <a href="{{ url_for('chat.index') }}">Return Home</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
