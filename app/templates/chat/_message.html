@@ -7,12 +7,12 @@
         <div class="summary">
             <span>{{ message.author.username }}</span>
             <div class="date">
-                {{ message.timestamp }}
+                {{ moment(message.timestamp).format('lll') }}
             </div>
         </div>
 
         <div class="extra text">
-            {{ message.body }}
+            {{ message.body|safe }}
         </div>
     </div>
 </div>

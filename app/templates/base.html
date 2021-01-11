@@ -23,34 +23,6 @@
             </head>
             <body {% block body_attribs %}{% endblock body_attribs %}>
                 {% block body %}
-                    {% block navbar %}
-                        <div class="ui top borderless fixed menu">
-                            <a href="{{ url_for('chat.index') }}" class="header item">
-                                <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo image">
-                                <span>Chatroom</span>
-                            </a>
-
-                            <div class="item">
-                                <div class="ui basic black label" title="Online users">
-                                    <i class="user icon"></i>
-                                    <span id="online-user">0</span> / {{ user_amount }}
-                                </div>
-                            </div>
-
-                            <div class="right menu">
-                                {% if current_user.is_anonymous %}
-                                    <div class="item">
-                                            <a class="ui primary button" href="{{ url_for('auth.login') }}">Sign In</a>
-                                    </div>
-                                {% endif %}
-
-                                <div id="toggle-sidebar" class="item">
-                                    <i class="sidebar icon"></i>
-                                </div>
-                            </div>
-                        </div>
-                    {% endblock navbar %}
-
                     <div class="ui inverted labeled icon right inline vertical sidebar menu">
                         <a class="item" href="{{ url_for('chat.index') }}">
                             <i class="home icon"></i>
@@ -74,12 +46,42 @@
                         </div>
                     </div>
 
+                    {% block navbar %}
+                        <div class="ui top borderless fixed menu">
+                            <a href="{{ url_for('chat.index') }}" class="header item">
+                                <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo image">
+                                <span>Chatroom</span>
+                            </a>
+
+                            <div class="item">
+                                <div class="ui basic black label" title="Online users">
+                                    <i class="user icon"></i>
+                                    <span id="online-user">0</span> / {{ user_amount }}
+                                </div>
+                            </div>
+
+                            <div class="right menu hide-on-mobile">
+                                {% if current_user.is_anonymous %}
+                                    <div class="item">
+                                            <a class="ui primary button" href="{{ url_for('auth.login') }}">Sign In</a>
+                                    </div>
+                                {% endif %}
+
+                                <div id="toggle-sidebar" class="item">
+                                    <i class="sidebar icon"></i>
+                                </div>
+                            </div>
+                        </div>
+                    {% endblock navbar %}
+
                     {% block content %}
                     {% endblock content %}
 
                     {% block scripts %}
                         <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
                         <script src="{{ url_for('static', filename='semantic-ui/semantic.min.js') }}"></script>
+                        {{ moment.include_moment(local_js=url_for('static', filename='js/moment-with-locales.min.js')) }}
+                        <!--{{ moment.lang('zh-cn') }}-->
                         <script src="{{ url_for('static', filename='js/form.js') }}"></script>
                         <script src="{{ url_for('static', filename='js/script.js') }}"></script>
                     {% endblock scripts %}
