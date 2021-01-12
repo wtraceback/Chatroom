@@ -106,7 +106,12 @@ def register_commands(app):
 
         click.echo('Generating users...')
         for i in range(50):
-            user = User(username=fake.name(), email=fake.email())
+            user = User(username=fake.name(),
+                        email=fake.email(),
+                        github = fake.url(),
+                        website = fake.url(),
+                        bio = fake.sentence()
+                        )
             db.session.add(user)
 
             try:

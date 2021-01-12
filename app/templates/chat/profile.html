@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Profile
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block content %}
+    <h1>Profile</h1>
+    <form class="" action="" method="post">
+        {{ form.hidden_tag() }}
+
+        <p>
+            {{ form.github.label }}<br>
+            {{ form.github(size=128) }}
+            {% for error in form.github.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+
+        <p>
+            {{ form.website.label }}<br>
+            {{ form.website(size=128) }}
+            {% for error in form.website.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+
+        <p>
+            {{ form.bio.label }}<br>
+            {{ form.bio(size=128) }}
+            {% for error in form.bio.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+
+        <p>
+            {{ form.submit() }}
+        </p>
+    </form>
+{% endblock %}
