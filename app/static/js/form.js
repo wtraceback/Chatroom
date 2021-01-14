@@ -81,7 +81,50 @@ $(document).ready(function() {
                         prompt: 'Your confirm password must be match the value of the password field'
                     }
                 ]
-            }
+            },
+        }
+    });
+
+    // profile form
+    $('.profile.ui.form').form({
+        inline: true,
+        fields: {
+            github: {
+                identifier: 'github',
+                optional: true,
+                rules: [
+                    {
+                        type: 'url',
+                        prompt: 'Please enter a valid url'
+                    }, {
+                        type: 'maxLength[128]',
+                        prompt: 'Your github must be not more than {ruleValue} characters'
+                    }
+                ]
+            },
+            website: {
+                identifier: 'website',
+                optional: true,
+                rules: [
+                    {
+                        type: 'url',
+                        prompt: 'Please enter a valid url'
+                    }, {
+                        type: 'maxLength[128]',
+                        prompt: 'Your website must be not more than {ruleValue} characters'
+                    }
+                ]
+            },
+            bio: {
+                identifier: 'bio',
+                optional: true,
+                rules: [
+                    {
+                        type: 'maxLength[128]',
+                        prompt: 'Your bio must be not more than {ruleValue} characters'
+                    }
+                ]
+            },
         }
     });
 });

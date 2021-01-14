@@ -96,3 +96,8 @@ body > .grid {
     margin-left: 70px;
     resize: none !important;
 }
+
+/* profile */
+.profile.ui.segment {
+    padding: 2em 1em;
+}

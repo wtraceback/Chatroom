@@ -8,36 +8,53 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Profile</h1>
-    <form class="" action="" method="post">
-        {{ form.hidden_tag() }}
+    <div class="ui middle aligned center aligned grid">
+        <div class="column">
+            <div class="ui top attached message">
+                <h3 class="ui teal image header">
+                    <img src="{{ url_for('static', filename='logo.png') }}" class="image">
+                    <div class="content">
+                        Tell us about you!
+                    </div>
+                </h3>
+            </div>
 
-        <p>
-            {{ form.github.label }}<br>
-            {{ form.github(size=128) }}
-            {% for error in form.github.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
+            <form class="profile ui form attached left aligned fluid segment" action="{{ url_for('chat.profile') }}" method="post">
+                <input id="csrf_token" name="csrf_token" type="hidden" value="{{ csrf_token() }}">
 
-        <p>
-            {{ form.website.label }}<br>
-            {{ form.website(size=128) }}
-            {% for error in form.website.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
+                <div class="field">
+                    <label for="github">GitHub</label>
+                    <input id="github" name="github" type="text" placeholder="https://github.com/wtraceback"
+                        value="{{ current_user.github or '' }}">
+                </div>
 
-        <p>
-            {{ form.bio.label }}<br>
-            {{ form.bio(size=128) }}
-            {% for error in form.bio.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
+                <div class="field">
+                    <label for="website">Website</label>
+                    <input id="website" name="website" type="text" placeholder="http://whxcer2.pythonanywhere.com/"
+                        value="{{ current_user.website or '' }}">
+                </div>
 
-        <p>
-            {{ form.submit() }}
-        </p>
-    </form>
+                <div class="field">
+                    <label for="bio">Bio</label>
+                    <input id="bio" name="bio" type="text" placeholder="I'm a ..."
+                        value="{{ current_user.bio or '' }}">
+                </div>
+
+                <div class="ui fluid large teal submit button">Save</div>
+            </form>
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="ui warning message">
+                            <i class="close icon"></i>
+                            <div>
+                                {{ message }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+    </div>
 {% endblock %}
