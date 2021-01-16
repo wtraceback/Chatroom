@@ -1,6 +1,6 @@
 <div class="event">
-    <div class="label">
-      <img src="{{ message.author.avatar(36) }}">
+    <div class="">
+      <img class="popup-card" src="{{ message.author.avatar(36) }}" data-href="{{ url_for('chat.get_profile', user_id=message.author.id) }}">
     </div>
 
     <div class="content">

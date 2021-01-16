@@ -27,3 +27,9 @@ def profile():
         return redirect(url_for('chat.index'))
 
     return render_template('chat/profile.html')
+
+
+@chat_bp.route('/profile/<user_id>')
+def get_profile(user_id):
+    user = User.query.get_or_404(user_id)
+    return render_template('chat/_profile_card.html', user=user)

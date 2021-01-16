@@ -50,7 +50,7 @@ body > .grid {
     border-radius: unset !important;
 }
 
-.messages .content {
+.messages>.event>.content {
     position: relative;
     flex-grow: 0 !important;
     padding: 12px !important;
@@ -59,7 +59,7 @@ body > .grid {
     background-color: #ECECEC;
 }
 
-.messages .content:before {
+.messages>.event>.content:before {
     content: '';
     width: 0;
     height: 0;
