@@ -1,8 +1,11 @@
 from flask import render_template, redirect, url_for, request, flash
 from flask_login import login_required, current_user
-from app import db
+from flask_socketio import emit
+from app import db, socketio
 from app.chat import chat_bp
 from app.models import User, Message
+
+online_users = []
 
 
 @chat_bp.route('/')
@@ -33,3 +36,27 @@ def profile():
 def get_profile(user_id):
     user = User.query.get_or_404(user_id)
     return render_template('chat/_profile_card.html', user=user)
+
+
+@socketio.on('new message')
+def new_message(msg):
+    message = Message(author=current_user._get_current_object(), body=msg['data'])
+    db.session.add(message)
+    db.session.commit()
+    emit('new message', {'data': render_template('chat/_message.html', message=message)}, broadcast=True)
+
+
+@socketio.on('connect')
+def connect():
+    global online_users
+    if current_user.is_authenticated and current_user.id not in online_users:
+        online_users.append(current_user.id)
+    emit('online users', {'data': len(online_users)}, broadcast=True)
+
+
+@socketio.on('disconnect')
+def connect():
+    global online_users
+    if current_user.is_authenticated and current_user.id in online_users:
+        online_users.remove(current_user.id)
+    emit('online users', {'data': len(online_users)}, broadcast=True)

@@ -6,12 +6,14 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, current_user
 from flask_wtf import CSRFProtect
 from flask_moment import Moment
+from flask_socketio import SocketIO
 
 
 db = SQLAlchemy()
 login = LoginManager()
 csrf = CSRFProtect()
 moment = Moment()
+socketio = SocketIO()
 
 
 def create_app(config_name=None):
@@ -44,6 +46,7 @@ def register_extensions(app):
     login.init_app(app)
     csrf.init_app(app)
     moment.init_app(app)
+    socketio.init_app(app)
 
 
 def register_blueprints(app):

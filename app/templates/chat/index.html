@@ -19,7 +19,7 @@
                 <div class="field ten wide">
                     {% if current_user.is_authenticated %}
                         <img src="{{ active_user.avatar(64) }}">
-                        <textarea name="body" rows="2" placeholder="Write your message here..."></textarea>
+                        <textarea id="message-textarea" name="body" rows="2" placeholder="Write your message here..."></textarea>
                     {% else %}
                         <div class="ui floating message">
                             <p>
@@ -32,4 +32,43 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+
+    <script>
+        $(document).ready(function() {
+            var socket = io('/')
+
+            var socketio_related = function() {
+                socket.on('new message', function(msg) {
+                    $('.messages').append(msg.data);
+                    flask_moment_render_all()
+                    scrollToBottom()
+                    activateSemantics()
+                });
+
+                socket.on('online users', function(msg) {
+                    $('#online-user').html(msg.data);
+                });
+
+                // 按回车发送消息
+                $('#message-textarea').on('keydown', function(e) {
+                    var message = $('#message-textarea').val().trim()
+                    if (e.key == "Enter" && !e.shiftKey && message) {
+                        e.preventDefault()
+                        socket.emit('new message', {data: message})
+                        $('#message-textarea').val('')
+                    }
+                })
+            }
+
+            var __main = function() {
+                socketio_related()
+            }
+
+            __main()
+        });
+    </script>
 {% endblock %}
