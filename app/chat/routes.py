@@ -55,7 +55,7 @@ def connect():
 
 
 @socketio.on('disconnect')
-def connect():
+def disconnect():
     global online_users
     if current_user.is_authenticated and current_user.id in online_users:
         online_users.remove(current_user.id)

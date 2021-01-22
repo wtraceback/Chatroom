@@ -82,6 +82,18 @@
                     {% block content %}
                     {% endblock content %}
 
+                    <div id="mobile-message-textarea-modal" class="ui modal small">
+                        <div class="content">
+                            <form class="ui form">
+                                <textarea id="mobile-message-textarea" name="body" rows="16" placeholder="Write your message here..."></textarea>
+                            </form>
+                        </div>
+                        <div class="actions">
+                            <button class="ui button cancel">Cancel</button>
+                            <button id="send-butn" class="ui button teal approve">Send</button>
+                        </div>
+                    </div>
+
                     {% block scripts %}
                         <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
                         <script src="{{ url_for('static', filename='semantic-ui/semantic.min.js') }}"></script>
