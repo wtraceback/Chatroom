@@ -7,6 +7,7 @@ from flask_login import LoginManager, current_user
 from flask_wtf import CSRFProtect
 from flask_moment import Moment
 from flask_socketio import SocketIO
+from flask_oauthlib.client import OAuth
 
 
 db = SQLAlchemy()
@@ -14,6 +15,7 @@ login = LoginManager()
 csrf = CSRFProtect()
 moment = Moment()
 socketio = SocketIO()
+oauth = OAuth()
 
 
 def create_app(config_name=None):
@@ -47,6 +49,7 @@ def register_extensions(app):
     csrf.init_app(app)
     moment.init_app(app)
     socketio.init_app(app)
+    oauth.init_app(app)
 
 
 def register_blueprints(app):
@@ -56,6 +59,8 @@ def register_blueprints(app):
     app.register_blueprint(chat_bp)
     from app.errors import errors_bp
     app.register_blueprint(errors_bp)
+    from app.oauth import oauth_bp
+    app.register_blueprint(oauth_bp)
 
 
 def register_template_context(app):

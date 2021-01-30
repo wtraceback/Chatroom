@@ -20,12 +20,17 @@ def login():
             remember_me = True
 
         user = User.query.filter_by(username=username).first()
-        if user is not None and user.check_password(password):
-            login_user(user, remember_me)
-            next_page = request.args.get('next')
-            if not next_page or url_parse(next_page).netloc != '':
-                next_page = url_for('chat.index')
-            return redirect(next_page)
+        if user is not None:
+            if user.password_hash is None:
+                flash('Please use the third party service to log in.')
+                return redirect(url_for('auth.login'))
+
+            if user.check_password(password):
+                login_user(user, remember_me)
+                next_page = request.args.get('next')
+                if not next_page or url_parse(next_page).netloc != '':
+                    next_page = url_for('chat.index')
+                return redirect(next_page)
 
         flash('Invalid username or password')
         return redirect(url_for('auth.login'))

@@ -69,6 +69,15 @@
                     Click to Register!
                 </a>
             </div>
+
+            <div class="ui horizontal divider">
+                Or sign in with
+            </div>
+            <div class="ui message">
+                <a class="icon" href="{{ url_for('oauth.oauth_login', provider_name='github') }}">
+                    <i class="github big black icon"></i>
+                </a>
+            </div>
         </div>
     </div>
 {% endblock %}
