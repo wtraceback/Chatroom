@@ -45,6 +45,40 @@ var scrollToBottom = function() {
     }
 }
 
+var page = 1;
+var load_messages = function() {
+    var position = $('.messages').scrollTop();
+    if (position == 0) {
+        page++;
+        // 激活加载器
+        $('.ui.loader').toggleClass('active');
+
+        $.ajax({
+            url: messages_url,
+            type: 'GET',
+            data: {page: page},
+            success: function(data) {
+                var before_height = $('.messages')[0].scrollHeight;
+                $('.messages').prepend(data);
+                var after_height = $('.messages')[0].scrollHeight;
+                $('.messages').scrollTop(after_height - before_height);
+
+                // 日期的渲染以及激活 semantic-ui 的 js 组件
+                flask_moment_render_all()
+                activateSemantics()
+
+                // 关闭加载器
+                $('.ui.loader').toggleClass('active');
+            },
+            error: function() {
+                alert('No more messages.');
+                // 关闭加载器
+                $('.ui.loader').toggleClass('active');
+            }
+        })
+    }
+}
+
 $(document).ready(function() {
     $.ajaxSetup({
         beforeSend: function(xhr, settings) {
@@ -57,6 +91,7 @@ $(document).ready(function() {
     var __main = function() {
         activateSemantics()
         scrollToBottom()
+        $('.messages').scroll(load_messages)
     }
 
     __main()

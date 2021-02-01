@@ -104,6 +104,7 @@
                         <script src="{{ url_for('static', filename='js/script.js') }}"></script>
                         <script type="text/javascript">
                             var csrf_token = "{{ csrf_token() }}"
+                            var messages_url = "{{ url_for('chat.get_messages') }}";
                         </script>
                     {% endblock scripts %}
                 {% endblock body %}

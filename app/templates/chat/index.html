@@ -8,9 +8,11 @@
     <div class="pusher">
         <div class="chat-box">
             <div class="ui feed messages">
-                {% for message in messages %}
-                    {% include 'chat/_message.html' %}
-                {% endfor %}
+                <div class="ui text loader">
+                    Loading messages...
+                </div>
+                
+                {% include 'chat/_messages.html' %}
             </div>
         </div>
 
