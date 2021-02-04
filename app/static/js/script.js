@@ -10,7 +10,7 @@ var activateSemantics = function() {
 
     $('#toggle-sidebar').click(function() {
         $('.menu.sidebar').sidebar('setting', 'transition', 'overlay').sidebar('toggle');
-    })
+    });
 
     $('.popup-card').popup({
         inline: true,
@@ -64,8 +64,8 @@ var load_messages = function() {
                 $('.messages').scrollTop(after_height - before_height);
 
                 // 日期的渲染以及激活 semantic-ui 的 js 组件
-                flask_moment_render_all()
-                activateSemantics()
+                flask_moment_render_all();
+                activateSemantics();
 
                 // 关闭加载器
                 $('.ui.loader').toggleClass('active');
@@ -89,9 +89,12 @@ $(document).ready(function() {
     });
 
     var __main = function() {
-        activateSemantics()
-        scrollToBottom()
-        $('.messages').scroll(load_messages)
+        activateSemantics();
+        scrollToBottom();
+        $('.messages').scroll(load_messages);
+        $('#show-help-modal').click(function() {
+            $('#help-modal').modal({blurring: true}).modal('show');
+        });
     }
 
     __main()

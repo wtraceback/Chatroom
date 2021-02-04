@@ -4,6 +4,7 @@ from flask_socketio import emit
 from app import db, socketio
 from app.chat import chat_bp
 from app.models import User, Message
+from app.utils import to_html
 
 online_users = []
 
@@ -50,7 +51,8 @@ def get_profile(user_id):
 
 @socketio.on('new message')
 def new_message(msg):
-    message = Message(author=current_user._get_current_object(), body=msg['data'])
+    html_message = to_html(msg['data'])
+    message = Message(author=current_user._get_current_object(), body=html_message)
     db.session.add(message)
     db.session.commit()
     emit('new message', {'data': render_template('chat/_message.html', message=message)}, broadcast=True)

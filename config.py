@@ -14,6 +14,8 @@ class Config(object):
     SECRET_KEY = os.getenv('SECRET_KEY', 'you-will-never-guess')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+    CHATROOM_MESSAGE_PER_PAGE = 30
+
     @staticmethod
     def init_app(app):
         pass
@@ -27,6 +29,8 @@ class DevelopmentConfig(Config):
 class TestingConfig(Config):
     TESTING = True
     SQLALCHEMY_DATABASE_URI = os.getenv('TEST_DATABASE_URL', prefix + os.path.join(basedir, 'data-test.db'))
+    # SQLALCHEMY_DATABASE_URI = 'sqlite:///'
+    WTF_CSRF_ENABLED = False
 
 
 class ProductionConfig(Config):

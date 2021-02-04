@@ -34,6 +34,11 @@
                             GitHub
                         </a>
 
+                        <a class="item" id="show-help-modal">
+                            <i class="help icon"></i>
+                            Help
+                        </a>
+
                         {% if current_user.is_authenticated %}
                             <a class="item" href="{{ url_for('chat.profile') }}">
                                 <i class="setting icon"></i>
@@ -82,6 +87,7 @@
                     {% block content %}
                     {% endblock content %}
 
+                    <!-- Mobile message Modal -->
                     <div id="mobile-message-textarea-modal" class="ui modal small">
                         <div class="content">
                             <form class="ui form">
@@ -91,6 +97,74 @@
                         <div class="actions">
                             <button class="ui button cancel">Cancel</button>
                             <button id="send-butn" class="ui button teal approve">Send</button>
+                        </div>
+                    </div>
+
+                    <!-- Help Modal -->
+                    <div id="help-modal" class="ui modal small">
+                        <div class="header">
+                            Markdown Help
+                        </div>
+                        <div class="content">
+                            <table class="ui celled striped table">
+                                <thead>
+                                    <tr>
+                                        <th>Effect</th>
+                                        <th>Grammar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><h1>Header</h1></td>
+                                        <td># H1</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Blod</strong></td>
+                                        <td>**blod**</td>
+                                    </tr>
+                                    <tr>
+                                        <td><em>Italics</em></td>
+                                        <td>*italics*</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="/">Link</a></td>
+                                        <td>[title](url)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Image</td>
+                                        <td>![alt](url)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>code</td>
+                                        <td>`code`</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+<pre>
+def hello():
+    return "Hello World"
+</pre>
+                                        </td>
+                                        <td>
+<pre>
+```python <i style="color: rgba(0, 0, 0, 0.5)">(shift + enter for line break)</i>
+def hello():
+    return "Hello World"
+```
+</pre>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>......</td>
+                                        <td>......</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="actions">
+                            <button class="ui button cancel">
+                                Close
+                            </button>
                         </div>
                     </div>
 
