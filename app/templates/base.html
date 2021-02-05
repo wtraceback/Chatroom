@@ -17,6 +17,7 @@
                     {% block styles %}
                         <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
                         <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+                        <link rel="stylesheet" href="{{ url_for('static', filename='css/pygments.css') }}">
                         <link rel="stylesheet" href="{{ url_for('static', filename='semantic-ui/semantic.min.css') }}">
                     {% endblock styles %}
                 {% endblock head %}
@@ -140,10 +141,9 @@
                                     </tr>
                                     <tr>
                                         <td>
-<pre>
-def hello():
-    return "Hello World"
-</pre>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">hello</span><span class="p">():</span>
+    <span class="k">return</span> <span class="s2">"Hello World"</span>
+</code></pre></div>
                                         </td>
                                         <td>
 <pre>
