@@ -1,8 +1,14 @@
 $(document).ready(function() {
     var socket = io('/')
+    var message_count = 0
 
     var socketio_event = function() {
         socket.on('new message', function(msg) {
+            message_count++;
+            if (!document.hasFocus()) {
+                document.title = '(' + message_count + ')' + 'Chatroom'
+            }
+
             $('.messages').append(msg.data);
             flask_moment_render_all()
             scrollToBottom()
@@ -46,6 +52,14 @@ $(document).ready(function() {
     var __main = function() {
         socketio_event()
         new_message_event()
+        
+        $(window).focus(function() {
+            message_count = 0
+            document.title = 'Chatroom'
+        });
+        $(window).blur(function() {
+            message_count = 0
+        });
     }
 
     __main()
