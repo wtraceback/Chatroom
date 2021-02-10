@@ -4,8 +4,8 @@ $(document).ready(function() {
 
     var socketio_event = function() {
         socket.on('new message', function(msg) {
-            message_count++;
             if (!document.hasFocus()) {
+                message_count++;
                 document.title = '(' + message_count + ')' + 'Chatroom'
             }
 
@@ -35,7 +35,8 @@ $(document).ready(function() {
         $('#message-textarea').focus(function() {
             if (screen.width < 600) {
                 $('#mobile-message-textarea-modal').modal('show')
-                $('#mobile-message-textarea').focus()
+                $('#message-textarea').blur()
+                // $('#mobile-message-textarea').focus()
             }
         })
 
@@ -52,13 +53,10 @@ $(document).ready(function() {
     var __main = function() {
         socketio_event()
         new_message_event()
-        
+
         $(window).focus(function() {
             message_count = 0
             document.title = 'Chatroom'
-        });
-        $(window).blur(function() {
-            message_count = 0
         });
     }
 
