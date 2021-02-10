@@ -89,8 +89,21 @@ $(document).ready(function() {
     });
 
     var __main = function() {
+        // 桌面通知
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!Notification) {
+                alert('Desktop notifications not available in your browser.');
+                return;
+            }
+
+            if (Notification.permission !== 'granted') {
+                Notification.requestPermission();
+            }
+        });
+
         activateSemantics();
         scrollToBottom();
+
         $('.messages').scroll(load_messages);
         $('#show-help-modal').click(function() {
             $('#help-modal').modal({blurring: true}).modal('show');

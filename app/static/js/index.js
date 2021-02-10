@@ -9,6 +9,10 @@ $(document).ready(function() {
                 document.title = '(' + message_count + ')' + 'Chatroom'
             }
 
+            if (msg.user_id !== current_user_id) {
+                message_notify(msg);
+            }
+
             $('.messages').append(msg.data);
             flask_moment_render_all()
             scrollToBottom()
@@ -50,10 +54,32 @@ $(document).ready(function() {
         })
     }
 
+    var message_notify = function(msg) {
+        if (Notification.permission !== 'granted') {
+            Notification.requestPermission();
+        } else {
+            var notification = new Notification('Message from ' + msg.username, {
+                icon: msg.gravatar,
+                body: msg.body.replace(/(<([^>]+)>)/ig, "")
+            });
+
+            // 点击桌面消息时触发
+            notification.onclick = function() {
+                window.open(root_url);
+                notification.close();
+            };
+
+            setTimeout(function() {
+                notification.close();
+            }, 5000);
+        }
+    }
+
     var __main = function() {
         socketio_event()
         new_message_event()
 
+        // 桌面通知
         $(window).focus(function() {
             message_count = 0
             document.title = 'Chatroom'

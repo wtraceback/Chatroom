@@ -55,7 +55,16 @@ def new_message(msg):
     message = Message(author=current_user._get_current_object(), body=html_message)
     db.session.add(message)
     db.session.commit()
-    emit('new message', {'data': render_template('chat/_message.html', message=message)}, broadcast=True)
+    emit('new message',
+        {
+            'data': render_template('chat/_message.html', message=message),
+            'body': html_message,
+            'gravatar': current_user.avatar(128),
+            'username': current_user.username,
+            'user_id': current_user.id
+        },
+        broadcast=True
+    )
 
 
 @socketio.on('connect')

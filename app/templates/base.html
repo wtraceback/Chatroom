@@ -179,6 +179,8 @@ def hello():
                         <script type="text/javascript">
                             var csrf_token = "{{ csrf_token() }}"
                             var messages_url = "{{ url_for('chat.get_messages') }}";
+                            var root_url = "{{ url_for('chat.index') }}"
+                            var current_user_id = {{ current_user.id|default(0) }}
                         </script>
                     {% endblock scripts %}
                 {% endblock body %}
