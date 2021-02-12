@@ -108,6 +108,21 @@ $(document).ready(function() {
         $('#show-help-modal').click(function() {
             $('#help-modal').modal({blurring: true}).modal('show');
         });
+
+        // delete message
+        $('.delete-butn').on('click', function() {
+            var $this = $(this)
+            $.ajax({
+                type: 'DELETE',
+                url: $this.data('href'),
+                success: function() {
+                    $this.parent().parent().parent().remove();
+                },
+                error: function() {
+                    alert('Oops, something was wrong.');
+                }
+            })
+        })
     }
 
     __main()

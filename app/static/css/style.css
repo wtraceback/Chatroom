@@ -71,6 +71,15 @@ body > .grid {
     margin-top: -10px;
 }
 
+.messages>.event>.ellipsis-icon {
+    visibility: hidden;
+    color: rgba(0,0,0,.2);
+}
+
+.messages>.event:hover > .ellipsis-icon {
+    visibility: visible;
+}
+
 /* input-area */
 .input-area {
     position: absolute;

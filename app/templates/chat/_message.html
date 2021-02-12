@@ -15,4 +15,17 @@
             {{ message.body|safe }}
         </div>
     </div>
+
+    {% if current_user == message.author or current_user.is_admin %}
+        <div class="ui icon left center pointing dropdown ellipsis-icon">
+            <i class="ellipsis horizontal icon"></i>
+            <div class="menu">
+                <div class="item delete-butn" data-href="{{ url_for('chat.delete_message', message_id=message.id) }}"
+                        onclick="return confirm('Are you sure?')">
+                    <i class="delete icon"></i>
+                    Delete
+                </div>
+            </div>
+        </div>
+    {% endif %}
 </div>

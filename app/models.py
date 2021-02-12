@@ -1,4 +1,5 @@
 from datetime import datetime
+from flask import current_app
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from hashlib import md5
@@ -27,6 +28,10 @@ class User(UserMixin, db.Model):
     def avatar(self, size):
         digest = md5(self.email.lower().encode('utf-8')).hexdigest()
         return 'https://www.gravatar.com/avatar/{}?d=monsterid&s={}'.format(digest, size)
+
+    @property
+    def is_admin(self):
+        return self.email == current_app.config['CHATROOM_ADMIN_EMAIL']
 
 
 class Message(db.Model):

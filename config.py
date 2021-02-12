@@ -15,6 +15,7 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     CHATROOM_MESSAGE_PER_PAGE = 30
+    CHATROOM_ADMIN_EMAIL = os.getenv('CHATROOM_ADMIN_EMAIL', 'admin@example.com')
 
     @staticmethod
     def init_app(app):
