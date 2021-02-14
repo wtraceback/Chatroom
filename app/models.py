@@ -1,9 +1,9 @@
 from datetime import datetime
 from flask import current_app
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import UserMixin
+from flask_login import UserMixin, AnonymousUserMixin
 from hashlib import md5
-from app import db
+from app import db, login
 
 
 class User(UserMixin, db.Model):
@@ -32,6 +32,15 @@ class User(UserMixin, db.Model):
     @property
     def is_admin(self):
         return self.email == current_app.config['CHATROOM_ADMIN_EMAIL']
+
+
+class Guest(AnonymousUserMixin):
+
+    @property
+    def is_admin(self):
+        return False
+
+login.anonymous_user = Guest
 
 
 class Message(db.Model):

@@ -111,18 +111,21 @@ $(document).ready(function() {
 
         // delete message
         $('.delete-butn').on('click', function() {
-            var $this = $(this)
-            $.ajax({
-                type: 'DELETE',
-                url: $this.data('href'),
-                success: function() {
-                    $this.parent().parent().parent().remove();
-                },
-                error: function() {
-                    alert('Oops, something was wrong.');
-                }
-            })
-        })
+            var confirm_result = confirm('Are you sure?')
+            if (confirm_result) {
+                var $this = $(this);
+                $.ajax({
+                    type: 'DELETE',
+                    url: $this.data('href'),
+                    success: function() {
+                        $this.parent().parent().parent().remove();
+                    },
+                    error: function() {
+                        alert('Oops, something was wrong.');
+                    }
+                })
+            }
+        });
     }
 
     __main()
