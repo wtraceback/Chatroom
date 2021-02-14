@@ -24,4 +24,12 @@
         <i class="linkify icon"></i>
         <a href="{{ user.website }}" target="_blank">Website</a>
     {% endif %}
+
+    {% if current_user.is_admin and not user.is_admin %}
+        <i class="delete icon"></i>
+        <a class="delete-user-butn" href="#" data-href="{{ url_for('admin.block_user', user_id=user.id) }}"
+            onclick="delete_user_event(this)">
+            Delete
+        </a>
+    {% endif %}
 </div>

@@ -79,6 +79,41 @@ var load_messages = function() {
     }
 }
 
+// delete user
+var delete_user_event = function(e) {
+    var confirm_result = confirm('Are you sure?')
+    if (confirm_result) {
+        $.ajax({
+            type: 'DELETE',
+            url: $(e).data('href'),
+            success: function() {
+                alert('Success, this user is gone!');
+            },
+            error: function() {
+                alert('Oops, something was wrong.');
+            }
+        })
+    }
+}
+
+// delete message
+var delete_message = function(e) {
+    var confirm_result = confirm('Are you sure?')
+    if (confirm_result) {
+        var $this = $(e);
+        $.ajax({
+            type: 'DELETE',
+            url: $this.data('href'),
+            success: function() {
+                $this.parent().parent().parent().remove();
+            },
+            error: function() {
+                alert('Oops, something was wrong.');
+            }
+        })
+    }
+}
+
 $(document).ready(function() {
     $.ajaxSetup({
         beforeSend: function(xhr, settings) {
@@ -107,24 +142,6 @@ $(document).ready(function() {
         $('.messages').scroll(load_messages);
         $('#show-help-modal').click(function() {
             $('#help-modal').modal({blurring: true}).modal('show');
-        });
-
-        // delete message
-        $('.delete-butn').on('click', function() {
-            var confirm_result = confirm('Are you sure?')
-            if (confirm_result) {
-                var $this = $(this);
-                $.ajax({
-                    type: 'DELETE',
-                    url: $this.data('href'),
-                    success: function() {
-                        $this.parent().parent().parent().remove();
-                    },
-                    error: function() {
-                        alert('Oops, something was wrong.');
-                    }
-                })
-            }
         });
     }
 

@@ -61,6 +61,8 @@ def register_blueprints(app):
     app.register_blueprint(errors_bp)
     from app.oauth import oauth_bp
     app.register_blueprint(oauth_bp)
+    from app.admin import admin_bp
+    app.register_blueprint(admin_bp)
 
 
 def register_template_context(app):
