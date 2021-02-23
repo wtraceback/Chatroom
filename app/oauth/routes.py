@@ -1,12 +1,12 @@
 import os
 from flask import abort, redirect, url_for, flash
 from flask_login import current_user, login_user
-from app import oauth, db
+from app import oauth2, db
 from app.models import User
 from app.oauth import oauth_bp
 
 
-github = oauth.remote_app(
+github = oauth2.remote_app(
     name='github',
     consumer_key=os.getenv('GITHUB_CLIENT_ID'),
     consumer_secret=os.getenv('GITHUB_CLIENT_SECRET'),

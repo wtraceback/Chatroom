@@ -15,7 +15,7 @@ login = LoginManager()
 csrf = CSRFProtect()
 moment = Moment()
 socketio = SocketIO()
-oauth = OAuth()
+oauth2 = OAuth()
 
 
 def create_app(config_name=None):
@@ -49,7 +49,7 @@ def register_extensions(app):
     csrf.init_app(app)
     moment.init_app(app)
     socketio.init_app(app)
-    oauth.init_app(app)
+    oauth2.init_app(app)
 
 
 def register_blueprints(app):
